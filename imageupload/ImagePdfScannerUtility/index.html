@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <title>Image/pdf Scanner Utility</title>
+	 <!-- Favicons-->
+    <link rel="icon" href="img/favicon-32x32.png" sizes="32x32">
+    <!-- Favicons-->
+    <link rel="apple-touch-icon-precomposed" href="img/apple-touch-icon-152x152.png">
+    <!-- For iPhone -->
+    <meta name="msapplication-TileColor" content="#00bcd4">
+    <meta name="msapplication-TileImage" content="img/favicon/mstile-144x144.png">
+
+	<link href="css/materialize.css" type="text/css" rel="stylesheet">
+    <link href="css/style.css" type="text/css" rel="stylesheet">
+    <!-- Custome CSS-->
+    <link href="css/custom.css" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	<style>
+
+	</style>
+ </head>
+  <body class="loaded">
+    <input type="hidden" id="ordernumber" placeholder="Order Number">
+    <input type="hidden" id="innovicenumber" placeholder="Innovice Number">
+    <input type="hidden" id="innovicestartdate" placeholder="Innovice StartDate">
+    <input type="hidden" id="innoviceduedate" placeholder="Innovice DueDate">
+    <input type="hidden" id="innvoiceamount" placeholder="Innvoice Amount">
+    <input type="hidden" id="invoiceleft" placeholder="Left">
+    <input type="hidden" id="invoicetop" placeholder="Top">
+    <textarea style="display:none;" id="base64textarea" placeholder="Base64 will appear here" cols="50" rows="15"></textarea>
+    <div id="text-overlay" style="display:none;"></div>
+
+
+
+
+
+    <div id="loader-wrapper">
+      <div id="loader"></div>
+      <div class="loader-section section-left"></div>
+      <div class="loader-section section-right"></div>
+    </div>
+	<header id="header" class="page-topbar">
+      <!-- start header nav-->
+      <div class="navbar-fixed">
+        <nav class="navbar-color gradient-45deg-purple-deep-orange gradient-shadow" style="background: #ffffff;color: #ffffff;">
+		<span>&nbsp;&nbsp;&nbsp;<img src="img/logo_gste.png" style="height: 52px;width: 168px;margin-top: -32px;" alt="avatar"/></span>
+		<div class="header-search-wrapper hide-on-med-and-down sideNav-lock">
+<h3 style="text-align:center;color: #0a7abb;padding-top: -2px !important;margin-left: 73px;margin-top: 7px;position: absolute;">Image/pdf Scanner Utility</h3>
+
+            </div>
+
+
+          <div class="nav-wrapper">
+            <ul class="right hide-on-med-and-down">
+              <li style="margin-top:-85px;">
+                <a href="javascript:void(0);" class="waves-effect waves-block waves-light toggle-fullscreen">
+                  <i class="material-icons">settings_overscan</i>
+                </a>
+              </li>
+            </ul>
+
+          </div>
+        </nav>
+      </div>
+    </header>
+
+	<div id="main">
+      <!-- START WRAPPER -->
+      <div class="wrapper">
+
+        <!-- //////////////////////////////////////////////////////////////////////////// -->
+        <!-- START CONTENT -->
+        <section id="content">
+          <!--start container-->
+          <div class="container">
+            <!--card stats start-->
+			<div id="card-stats">
+            </div>
+            <div id="card-stats">
+              <div class="row">
+
+                <div class="col s8 m4 8">
+
+				</span> <a class="waves-effect waves-light btn gradient-45deg-purple-deep-orange gradient-shadow" style="color: white;background: #0a7abb;">Export as CSV</a>
+				  </span> <a class="waves-effect waves-light btn gradient-45deg-purple-deep-orange gradient-shadow right"style="color: white;background: #0a7abb;" >Save Coordinates</a>
+<br/>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+<div class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text" style="min-height:0px !important">
+   <div class="text">
+                	<a role="button"  id="kintu" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+	              <i class="glyphicon glyphicon-plus" id="ki" style="color:white;float:right;padding-right:10px;"></i></a>
+					<h4 style="text-align: center; color:white;">General Details</h4><br>
+</div>
+	<div id="collapseOne" class="panel-collapse collapse in" style="display:visible;"role="tabpanel" aria-labelledby="headingOne">
+                      <div class="col s6 m6" style="background-color: #d3e0eb;color: #377bbb;margin-top: -20px;height: 225px;">
+                         <br/>Invoice Number<br/><br/>
+						 Invoice Date<br/><br/>
+						 Payment Due<br/><br/>
+						 Currency<br/><br/>
+						Amount Due
+                      </div>
+                      <div class="col s6 m6 right-align"style="background-color: #d3e0eb;margin-top: -20px;height: 225px;/* padding-top: 16px; */">
+					<br/>
+          <input type="text" id="innovoicename" placeholder="Invoice Name">
+          <input type="text" id="invoice_date" placeholder="Invoice Date">
+          <input type="text" id="po_no" placeholder="Payment Due">
+          <input type="text" id="currency" placeholder="Currency">
+          <input type="text" id="payment_terms" placeholder="Payment Terms">
+                      </div>
+
+                  </div>
+				  </div>
+
+
+                  <div class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text"  style="min-height:0px !important">
+				  <div class="text">
+				  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne">
+	              <i class="short-full glyphicon glyphicon-plus" style="color:white;float:right;padding-right:10px;"></i></a>
+                    <h4 style="text-align: center; color:white">Bill From</h4><br/>
+                     </div>
+
+
+					 	<div id="collapseOne1" class="panel-collapse collapse in" style="display:visible;"role="tabpanel" aria-labelledby="headingOne">
+                      <div class="col s6 m6" style="background-color: #d3e0eb;color: #377bbb;margin-top: -20px;height: 230px;">
+                         <br/>Company Name<br/><br/>
+                          Phone number<br/><br/>
+                          Address<br/><br/>
+
+                      </div>
+                      <div class="col s6 m6 right-align"style="background-color: #d3e0eb;margin-top: -20px;height: 230px;/* padding-top: 16px; */">
+          <br/>
+                         <input type="text" id="company_name_bf"/>
+             <input type="text"id="ph_bf"/>
+             <!-- <textarea class="form-control" rows="5" id="address_bf"></textarea> -->
+             <textarea class="form-control" rows="5" id="address_bf" style="
+                 display: block;
+                 width: 96%;
+                 height: -46px;
+                 height: 85px !important;
+                 padding: -15px -21px;
+                 margin-left: -185px;
+                 /* margin-right: -74px; */
+                 margin-top: 33px;
+                 font-size: 14px;
+                 line-height: 1.42857143;
+                 color: #555;
+                 background-color: #fff;
+                 background-image: none;
+                 border: 1px solid #ccc;
+                 position: absolute;
+                 border-radius: 4px;
+             "></textarea>
+
+                      </div>
+					   </div>
+                  </div>
+
+
+
+                  <div class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text"  style="min-height:0px !important">
+				    <div class="text">
+					 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne2" aria-expanded="true" aria-controls="collapseOne">
+	              <i class="#category-tabs glyphicon glyphicon-plus" style="color:white;float:right;padding-right:10px;"></i></a>
+                    <h4 style="text-align: center; color:white">Bill To</h4><br/>
+					</div>
+<div id="collapseOne2" class="panel-collapse collapse in" style="display:visible;"role="tabpanel" aria-labelledby="headingOne">
+                      <div class="col s6 m6" style="background-color: #d3e0eb;color: #377bbb;margin-top: -20px;height: 230px;">
+                         <br/>Company Name<br/><br/>
+                          Email id<br/><br/>
+                          Address<br/><br/>
+
+                      </div>
+                      <div class="col s6 m6 right-align"style="background-color: #d3e0eb;margin-top: -20px;height: 230px;/* padding-top: 16px; */">
+              <br/>
+                         <input type="text" id="company_name_bt"/>
+              <input type="text"id="email_bt"/>
+              <!-- <textarea class="form-control" rows="5" id="address_bt"></textarea> -->
+              <textarea class="form-control" rows="5" id="address_bt" style="
+                  display: block;
+                  width: 96%;
+                  height: -46px;
+                  height: 85px !important;
+                  padding: -15px -21px;
+                  margin-left: -185px;
+                  /* margin-right: -74px; */
+                  margin-top: 33px;
+                  font-size: 14px;
+                  line-height: 1.42857143;
+                  color: #555;
+                  background-color: #fff;
+                  background-image: none;
+                  border: 1px solid #ccc;
+                  position: absolute;
+                  border-radius: 4px;
+              "></textarea>
+
+
+                      </div>
+      </div>
+                  </div>
+
+
+		</div>
+
+
+
+
+                  <div style="display:none;"class="card gradient-45deg-light-blue-cyan gradient-shadow min-height-100 white-text">
+                    <h4 style="text-align: center; color:white">Notes</h4><br/>
+
+                      <div class="col s6 m6" style="background-color: #d3e0eb;margin-top: -20px;height: 290px;">
+                         <br/>GST<br/><br/>
+                          SAC CODE<br/><br/>
+                          GST NO<br/><br/>
+                          <!-- PAYABLE TO<br/><br/> -->
+
+                      </div>
+                      <div class="col s6 m6 right-align"style="background-color: #d3e0eb;margin-top: -20px;height: 290px;/* padding-top: 16px; */">
+              <br/>
+                         <input type="text" id="gst_nt"/>
+              <input type="text"id="sac_nt"/>
+              <input type="text"id="gst_no_nt"/>
+              <!-- <input type="text"id="payable_nt"/> -->
+
+
+                      </div>
+
+                  </div>
+
+
+
+                  <table id="notes_tb">
+  <tr>
+    <th>Name</th>
+    <th>Data</th>
+
+  </tr>
+
+
+</table>
+
+
+
+
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="email">Choose a file:</label>
+
+            <div class="">
+
+
+              <input type="file" id="filePicker" >
+              <input type="hidden" id="newinnovoicename" value="" placeholder="Innovoice Name">
+
+            </div>
+            </div>
+
+                </div>
+
+                <!-- <input type="file" id="filePicker"> -->
+                <!-- <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <span class="btn btn-default btn-file"><span>Choose file</span><input type="file" /></span>
+                    <span class="fileinput-filename"></span><span class="fileinput-new"></span>
+                </div> -->
+
+
+
+                <div class="col s12 m8 24" style="margin-top:5px;">
+                </span> <a href="#notes_tb"class="waves-effect waves-light btn gradient-45deg-purple-deep-orange gradient-shadow" style="color: white;margin-left: 500px;background: #0a7abb;">Notes Details</a>
+              </span> <a href="#item_tb"class="waves-effect waves-light btn gradient-45deg-purple-deep-orange gradient-shadow right"style="color: white;background: #0a7abb;" >Products</a>
+
+                  <div class="card gradient-45deg-gray-teal gradient-shadow min-height-100 white-text">
+                   <div style="height:890px;">
+                     <div class="zone" id="dropZ1">
+
+                   <div id="dropZ">
+
+                     <div class="selectFile">
+<img src="img/upload.png" id="imageupload"  style="margin-top: 128px !important;" style="margin-top: 128px !important;"/>
+                     </div>
+                   </div>
+
+                 </div>
+                   <canvas id="the-canvas" style="width:1204px !important"></canvas>
+				   </div>
+
+
+                  </div>
+                  <table id="item_tb">
+  <tr>
+    <th>Product</th>
+    <th>Quantity</th>
+    <th>Price</th>
+    <th>Amount</th>
+
+  </tr>
+
+
+</table>
+
+                </div>
+              </div>
+            </div>
+            <!--card stats end-->
+      </div>
+	 <!-- START FOOTER -->
+      <!-- <footer class="page-footer gradient-45deg-purple-deep-orange">
+        <div class="footer-copyright">
+          <div class="container">
+            <span>Copyright ©
+              <script type="text/javascript">
+                document.write(new Date().getFullYear());
+              </script> <a class="grey-text text-lighten-4" href="#" target="_blank">Innovellent</a> All rights reserved.</span>
+            <span class="right hide-on-small-only"> Design and Developed by <a class="grey-text text-lighten-4" href="#">Innovellent</a></span>
+          </div>
+        </div>
+      </footer> -->
+
+
+
+<!--
+      <link rel="icon" href="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/css/jasny-bootstrap.css">
+
+      <link rel="icon" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/3.1.3/js/jasny-bootstrap.js
+"></script>
+
+      <script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js
+"></script> -->
+
+	 <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+      <!--materialize js-->
+      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <!--prism-->
+      <script type="text/javascript" src="js/prism.js"></script>
+      <!--scrollbar-->
+      <script type="text/javascript" src="js/perfect-scrollbar.min.js"></script>
+      <!-- chartjs -->
+      <script type="text/javascript" src="js/chart.min.js"></script>
+      <!--plugins.js - Some Specific JS codes for Plugin Settings-->
+      <script type="text/javascript" src="js/plugins.js"></script>
+      <!--custom-script.js - Add your own theme custom JS-->
+      <script type="text/javascript" src="js/custom-script.js"></script>
+      <script type="text/javascript" src="js/dashboard-ecommerce.js"></script>
+<style>
+@import url(https://fonts.googleapis.com/css?family=Exo+2:400,700,500,300);
+
+body {
+  background: #ebeff2;
+  font-family: "Exo 2";
+}
+#notes_tb {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#notes_tb td, #notes_tb th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#notes_tb tr:nth-child(even){background-color: #d3e0eb;}
+
+#notes_tb tr:hover {background-color: #d3e0eb;}
+
+#notes_tb th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #0a7abb;
+    color: white;
+}
+#item_tb {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#item_tb td, #item_tb th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#item_tb tr:nth-child(even){background-color: #d3e0eb;}
+
+#item_tb tr:hover {background-color: #d3e0eb;}
+
+#item_tb th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #0a7abb;
+    color: white;
+}
+
+.zone {
+  margin: auto;
+  position: absolute;
+  top: -320px; left: 0; bottom: 0; right: 0;
+  background: #d3e0eb;
+  width:80%;
+  height:50%;
+  border:5px dashed #0a7abb;
+  text-align:center;
+  color: white;
+  z-index: 20;
+  transition: all 0.3s ease-out;
+  box-shadow: 0 0 0 1px rgba(255,255,255,.05),inset 0 0 .25em 0 rgba(0,0,0,.25);
+  .btnCompression {
+    .btn {
+
+    }
+    .active {
+      background: #EB6A5A;
+      color:white;
+    }
+  }
+  i {
+    text-align: center;
+    font-size: 10em;
+    color:#fff;
+    margin-top: 50px;
+  }
+  .selectFile {
+    height: 50px;
+    margin: 20px auto;
+    position: relative;
+    width: 200px;
+  }
+
+  label, input {
+    cursor: pointer;
+    display: block;
+    height: 50px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    border-radius: 5px;
+  }
+
+  label {
+    background: #fff;
+    color:#EB6A5A;
+    display: inline-block;
+    font-size: 1.2em;
+    line-height: 50px;
+    padding: 0;
+    text-align: center;
+    white-space: nowrap;
+    text-transform: uppercase;
+    font-weight: 400;
+    box-shadow: 0 1px 1px gray;
+  }
+
+  input[type=file] {
+    opacity: 0;
+  }
+
+}
+.zone.in {
+  color:white;
+  border-color:white;
+  background: radial-gradient(ellipse at center,#EB6A5A 0,#c9402f 100%);
+  i {
+    color:#fff;
+  }
+  label {
+    background: #fff;
+    color:#EB6A5A;
+  }
+}
+.zone.hover {
+  color:gray;
+  border-color:white;
+  background:#fff;
+  border:5px dashed gray;
+  i {
+    color:#EB6A5A;
+  }
+  label {
+    background: #fff;
+    color:#EB6A5A;
+  }
+}
+.zone.fade {
+  transition: all 0.3s ease-out;
+  opacity: 1;
+}
+</style>
+<script>
+
+</script>
+
+
+
+  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+  <script>
+  var invoiceleft='';
+  var invoicetop='';
+  var notes_vl='';
+  var notes_vt='';
+  var notes_vl1='';
+  var notes_vt1='';
+  var item_vl='';
+  var item_vt='';
+  var item_vl1='';
+  var item_vt1='';
+  var sitem_vl='';
+  var sitem_vt='';
+  var sitem_vl1='';
+  var sitem_vt1='';
+  var p="";
+  var q="";
+  var p="";
+  var a="";
+
+    var handleFileSelect = function(evt) {
+document.getElementById("dropZ1").style.display = "none";
+      document.getElementById("innovoicename").value='';
+        document.getElementById("invoice_date").value='';
+          document.getElementById("po_no").value='';
+            document.getElementById("currency").value='';
+              document.getElementById("payment_terms").value='';
+
+
+              document.getElementById("gst_nt").value='';
+
+              document.getElementById("sac_nt").value='';
+
+              document.getElementById("gst_no_nt").value='';
+
+              document.getElementById("company_name_bt").value='';
+
+              document.getElementById("email_bt").value='';
+
+              document.getElementById("address_bt").value='';
+
+              document.getElementById("company_name_bf").value='';
+
+              document.getElementById("ph_bf").value='';
+
+              document.getElementById("address_bf").value='';
+
+
+                // document.getElementById("innvoiceamount").value='';
+
+      //alert(document.getElementById("invoiceleft").value);
+      var files = evt.target.files;
+      var file = files[0];
+
+      if (files && file) {
+        var reader = new FileReader();
+
+        reader.onload = function(readerEvt) {
+          var binaryString = readerEvt.target.result;
+          document.getElementById("base64textarea").value = btoa(binaryString);
+          //console.log(btoa(binaryString));
+
+          //////////////////////
+
+
+          //console.log(document.getElementById("base64textarea").value);
+          ////////////////////////
+
+
+
+          var pdfData = atob(btoa(binaryString));
+
+          // Disable workers to avoid yet another cross-origin issue (workers need
+          // the URL of the script to be loaded, and dynamically loading a cross-origin
+          // script does not work).
+          // PDFJS.disableWorker = true;
+
+          // The workerSrc property shall be specified.
+          PDFJS.workerSrc = 'http:////mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+          // Using DocumentInitParameters object to load binary data.
+          var loadingTask = PDFJS.getDocument({
+            data: pdfData
+          });
+          loadingTask.promise.then(function(pdf) {
+            console.log('PDF loaded');
+
+            // Fetch the first page
+            var pageNumber = 1;
+            pdf.getPage(pageNumber).then(function(page) {
+              //console.log('Page loaded');
+
+              var scale = 1.5;
+              var viewport = page.getViewport(scale);
+
+              // Prepare canvas using PDF page dimensions
+              var canvas = document.getElementById('the-canvas');
+              var context = canvas.getContext('2d');
+              //console.log("context");
+              console.log(context);
+              //canvas.height="900";
+              canvas.height="1110";
+              canvas.width="1504";
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+            canvas.height="1110";
+            canvas.width="1504";
+
+              var renderContext = {
+                canvasContext: context,
+                viewport: viewport
+              };
+              var renderTask = page.render(renderContext);
+              renderTask.then(function() {
+                //console.log('Page rendered');
+              });
+
+
+              var ctx = document.createElement('canvas').getContext('2d', {
+                alpha: false
+              });
+
+
+              var pageContainer = document.getElementById('text-overlay');
+              pageContainer.classList.add('page-container');
+              pageContainer.style.width = viewport.width + 'px';
+              pageContainer.style.height = viewport.height + 'px';
+
+              page.getTextContent({
+                normalizeWhitespace: true
+              }).then(function(textContent) {
+
+                textContent.items.forEach(function(textItem) {
+                  var tx = PDFJS.Util.transform(
+                    PDFJS.Util.transform(viewport.transform, textItem.transform), [1, 0, 0, -1, 0, 0]
+                  );
+
+                  var style = textContent.styles[textItem.fontName];
+
+                  var fontSize = Math.sqrt((tx[2] * tx[2]) + (tx[3] * tx[3]));
+
+                  if (style.ascent) {
+                    tx[5] -= fontSize * style.ascent;
+                  } else if (style.descent) {
+                    tx[5] -= fontSize * (1 + style.descent);
+                  } else {
+                    tx[5] -= fontSize / 2;
+                  }
+
+                  if (textItem.width > 0) {
+                    ctx.font = tx[0] + 'px ' + style.fontFamily;
+
+                    var width = ctx.measureText(textItem.str).width;
+                    //console.log(width);
+                    if (width > 0) {
+                      tx[0] = (textItem.width * viewport.scale) / width;
+                    }
+                  }
+
+                  var item = document.createElement('span');
+                  item.textContent = textItem.str === 'Adobe Acrobat PDF Files' ? 'Burp!' : textItem.str;
+                  item.style.fontFamily = style.fontFamily;
+                  item.style.fontSize = fontSize + 'px';
+                  item.style.transform = 'scaleX(' + tx[0] + ')';
+                  item.style.left = tx[4] + 'px';
+                  item.style.top = tx[5] + 'px';
+
+                  pageContainer.appendChild(item);
+                });
+              });
+              var pageContainer = document.getElementById('text-overlay');
+              pageContainer.classList.add('page-container');
+            pageContainer.style.width = viewport.width + 'px';
+            //   pageContainer.style.width = '100px';
+           pageContainer.style.height = viewport.height + 'px';
+              //   pageContainer.style.height="100px";
+  //  alert(  pageContainer.style.width);
+  //  alert(  pageContainer.style.height);
+              page.getTextContent({
+                normalizeWhitespace: true
+              }).then(function(textContent) {
+                var fruits = [];
+
+                textContent.items.forEach(function(textItem) {
+              console.log("textItem");
+              console.log(textItem);
+              console.log("textItem");
+                  var tx = PDFJS.Util.transform(
+                    PDFJS.Util.transform(viewport.transform, textItem.transform), [1, 0, 0, -1, 0, 0]
+                  );
+
+                  var style = textContent.styles[textItem.fontName];
+
+                  var fontSize = Math.sqrt((tx[2] * tx[2]) + (tx[3] * tx[3]));
+
+                  if (style.ascent) {
+                    tx[5] -= fontSize * style.ascent;
+                  } else if (style.descent) {
+                    tx[5] -= fontSize * (1 + style.descent);
+                  } else {
+                    tx[5] -= fontSize / 2;
+                  }
+
+                  if (textItem.width > 0) {
+                    ctx.font = tx[0] + 'px ' + style.fontFamily;
+
+                    var width = ctx.measureText(textItem.str).width;
+
+                    if (width > 0) {
+                      tx[0] = (textItem.width * viewport.scale) / width;
+                    }
+                  }
+
+                  var item = document.createElement('span');
+                  //item.textContent = textItem.str === 'Hello, world!' ? 'Burp!' : textItem.str;
+
+                  item.style.left = tx[4] + 'px';
+                  item.style.top = tx[5] + 'px';
+                  //  Getting values from pdf and appending into text box
+
+                  var lft = item.style.left;
+                  var top = item.style.top;
+                  // alert(lft);
+                  // alert(top);
+                  // document.getElementById("invoiceleft").value
+                  //   document.getElementById("invoicetop").value
+                  if(invoiceleft==''){
+
+//console.log(document.getElementById("newinnovoicename"));
+                  if (textItem.str == "TP2139") {
+                      invoiceleft=item.style.left;
+                       invoicetop=item.style.top;
+                      //  alert(invoiceleft);
+                      //  alert(invoicetop);
+                         document.getElementById("invoiceleft").value=invoiceleft;
+                         document.getElementById("invoicetop").value=invoicetop;
+                  // alert("Your invoice number top and left pxs are:" + item.style.left + "," +
+                  //     item.style.top);
+
+                  }
+                    }
+
+
+
+                    var canvas = document.getElementById('the-canvas');
+                    var context = canvas.getContext('2d');
+                      context.strokeStyle='#e97f31';
+                    context.strokeRect(332, 650, 275,120);
+                    context.strokeRect(22, 500, 205,100);
+
+
+                    context.strokeRect(490, 595, 50, 20);
+                    context.strokeRect(490, 575, 90, 20);
+                    context.strokeRect(490, 555, 90, 20);
+                    context.strokeRect(490, 540, 55, 10);
+                    region={x:490,y:535,w:15,h:5}
+
+                    var t1 = new ToolTip(canvas, region, " Bill From - Details", 150, 3000);
+
+                    // The Tool-Tip instance:
+                    function ToolTip(canvas, region, text, width, timeout) {
+                      var me = this,                                // self-reference for event handlers
+                          div = document.createElement("div"),      // the tool-tip div
+                          parent = canvas.parentNode,               // parent node for canvas
+                          visible = false;                          // current status
+
+                      // set some initial styles, can be replaced by class-name etc.
+                      div.style.cssText = "position:fixed;padding:7px;background:gold;pointer-events:none;width:" + width + "px";
+                      div.innerHTML = text;
+
+                      // show the tool-tip
+                      this.show = function(pos) {
+                        if (!visible) {                             // ignore if already shown (or reset time)
+                          visible = true;                           // lock so it's only shown once
+                          setDivPos(pos);                           // set position
+                          parent.appendChild(div);                  // add to parent of canvas
+                          setTimeout(hide, timeout);                // timeout for hide
+                        }
+                      }
+
+                      // hide the tool-tip
+                      function hide() {
+                        visible = false;                            // hide it after timeout
+                        parent.removeChild(div);                    // remove from DOM
+                      }
+
+                      // check mouse position, add limits as wanted... just for example:
+                      function check(e) {
+                        var pos = getPos(e),
+                            posAbs = {x: e.clientX, y: e.clientY};  // div is fixed, so use clientX/Y
+                  console.log(posAbs);
+                  var d=(region.x + region.w);
+                  console.log(pos.y);
+                  console.log(pos.x +">="+ region.x +"&&"+ pos.x +"<"+ d);
+                  var dd=(region.y + region.y);
+                  console.log(pos.x);
+                  console.log(pos.y +">="+ region.y +"&&"+ pos.y +"<"+ dd);
+                        if (
+                            (pos.x >= 403&& pos.x <=730)&&(pos.y >= 51&& pos.y <= 170)
+                            ) {
+                  console.log("posAbs");
+                  console.log(posAbs);
+                  me.show(posAbs);                          // show tool-tip at this pos
+
+                               }
+                               else setDivPos(posAbs);                     // otherwise, update position
+                             }
+
+                           // get mouse position relative to canvas
+                           function getPos(e) {
+                           var r = canvas.getBoundingClientRect();
+                           return {x: e.clientX - r.left, y: e.clientY - r.top}
+                           }
+
+                           // update and adjust div position if needed (anchor to a different corner etc.)
+                           function setDivPos(pos) {
+                           if (visible){
+                           if (pos.x < 0) pos.x = 0;
+                           if (pos.y < 0) pos.y = 0;
+                           // other bound checks here
+                           div.style.left = pos.x + "px";
+                           div.style.top = pos.y + "px";
+                           }
+                           }
+
+                           // we need to use shared event handlers:
+                           // canvas.addEventListener("mousemove", hide);
+                           canvas.addEventListener("click", check);
+
+                           }
+
+                  if ((lft == "735.868px") && (top == "275.783px")) {
+                  //  console.log("Invoice number");
+                  // create a tool-tip instance:
+
+                    document.getElementById("innovoicename").value = textItem.str;
+                    //var y1=data1[i].baseline.y0-10;
+                    // var c = document.getElementById("the-canvas");
+                    // var ctx1 = c.getContext("2d");
+
+                    // create a tool-tip instance:
+                    var canvas =  document.getElementById("the-canvas");
+
+// region = {x: 50, y: 50, w: 100, h: 100};
+                    region={x:490,y:535,w:15,h:5}
+
+                    var t1 = new ToolTip(canvas, region, "This is an Invoice Number", 150, 3000);
+
+                    // The Tool-Tip instance:
+                    function ToolTip(canvas, region, text, width, timeout) {
+                      var me = this,                                // self-reference for event handlers
+                          div = document.createElement("div"),      // the tool-tip div
+                          parent = canvas.parentNode,               // parent node for canvas
+                          visible = false;                          // current status
+
+                      // set some initial styles, can be replaced by class-name etc.
+                      div.style.cssText = "position:fixed;padding:7px;background:gold;pointer-events:none;width:" + width + "px";
+                      div.innerHTML = text;
+
+                      // show the tool-tip
+                      this.show = function(pos) {
+                        if (!visible) {                             // ignore if already shown (or reset time)
+                          visible = true;                           // lock so it's only shown once
+                          setDivPos(pos);                           // set position
+                          parent.appendChild(div);                  // add to parent of canvas
+                          setTimeout(hide, timeout);                // timeout for hide
+                        }
+                      }
+
+                      // hide the tool-tip
+                      function hide() {
+                        visible = false;                            // hide it after timeout
+                        parent.removeChild(div);                    // remove from DOM
+                      }
+
+                      // check mouse position, add limits as wanted... just for example:
+                      function check(e) {
+                        var pos = getPos(e),
+                            posAbs = {x: e.clientX, y: e.clientY};  // div is fixed, so use clientX/Y
+
+                        if (
+                            (pos.x >= 588&& pos.x <= 650)&&(pos.y >= 211&& pos.y <= 235)
+                            ) {
+                                console.log("posAbs");
+                                console.log(posAbs);
+                                me.show(posAbs);                          // show tool-tip at this pos
+
+                               }
+                               else setDivPos(posAbs);                     // otherwise, update position
+                             }
+
+                           // get mouse position relative to canvas
+                           function getPos(e) {
+                           var r = canvas.getBoundingClientRect();
+                           return {x: e.clientX - r.left, y: e.clientY - r.top}
+                           }
+
+                           // update and adjust div position if needed (anchor to a different corner etc.)
+                           function setDivPos(pos) {
+                           if (visible){
+                           if (pos.x < 0) pos.x = 0;
+                           if (pos.y < 0) pos.y = 0;
+                           // other bound checks here
+                           div.style.left = pos.x + "px";
+                           div.style.top = pos.y + "px";
+                           }
+                           }
+
+                           // we need to use shared event handlers:
+                           // canvas.addEventListener("mousemove", hide);
+                           canvas.addEventListener("click", check);
+
+                           }
+
+
+
+                  }
+                  if ((lft == "735.868px") && (top == "305.708px")) {
+                  //  console.log("Invoice number");
+                    document.getElementById("invoice_date").value = textItem.str;
+
+                  }
+
+                  if ((lft == "735.868px") && (top == "335.632px")) {
+                    //console.log("Order number");
+                    document.getElementById("po_no").value = textItem.str;
+
+                  }
+
+                  if ((lft == "735.868px") && (top == "361.717px")) {
+                  //  console.log("Invoice Dtae");
+                    document.getElementById("currency").value = textItem.str;
+
+                  }
+
+                  if ((lft == "744.388px") && (top == "364.988px")) {
+                  //  console.log("Invoice Due Date");
+                    document.getElementById("payment_terms").value = textItem.str;
+
+                  }
+
+                  //new
+                  if ((lft == "739.125px") && (top == "97.275px")) {
+                  //  console.log("Invoice Due Date");
+                    document.getElementById("company_name_bf").value = textItem.str;
+
+                  }
+                  if ((lft == "730.095px") && (top == "195.825px")) {
+                  //  console.log("Invoice Due Date");
+                    document.getElementById("ph_bf").value = textItem.str;
+
+                  }
+
+                  if ((lft >= "515.97px" && lft<="686.805px") && (top >= "130.125px" && top <= "146.55px" )) {
+                  //  console.log("Invoice Due Date");
+
+
+                    //document.getElementById("address_bf").value = textItem.str;
+                    $('#address_bf').val($('#address_bf').val() + textItem.str);
+                  }
+                    //alert(t);
+                  //alert(t);
+                  if ((lft == "32.25px") && (top == "290.1px")) {
+                  //  console.log("Invoice Due Date");
+                    document.getElementById("company_name_bt").value = textItem.str;
+
+
+
+                    region={x:490,y:535,w:15,h:5}
+
+                    var t1 = new ToolTip(canvas, region, " Bill To - Details", 150, 3000);
+
+                    // The Tool-Tip instance:
+                    function ToolTip(canvas, region, text, width, timeout) {
+                      var me = this,                                // self-reference for event handlers
+                          div = document.createElement("div"),      // the tool-tip div
+                          parent = canvas.parentNode,               // parent node for canvas
+                          visible = false;                          // current status
+
+                      // set some initial styles, can be replaced by class-name etc.
+                      div.style.cssText = "position:fixed;padding:7px;background:gold;pointer-events:none;width:" + width + "px";
+                      div.innerHTML = text;
+
+                      // show the tool-tip
+                      this.show = function(pos) {
+                        if (!visible) {                             // ignore if already shown (or reset time)
+                          visible = true;                           // lock so it's only shown once
+                          setDivPos(pos);                           // set position
+                          parent.appendChild(div);                  // add to parent of canvas
+                          setTimeout(hide, timeout);                // timeout for hide
+                        }
+                      }
+
+                      // hide the tool-tip
+                      function hide() {
+                        visible = false;                            // hide it after timeout
+                        parent.removeChild(div);                    // remove from DOM
+                      }
+
+                      // check mouse position, add limits as wanted... just for example:
+                      function check(e) {
+                        var pos = getPos(e),
+                            posAbs = {x: e.clientX, y: e.clientY};  // div is fixed, so use clientX/Y
+                    console.log(posAbs);
+                    var d=(region.x + region.w);
+                    console.log(pos.y);
+                    console.log(pos.x +">="+ region.x +"&&"+ pos.x +"<"+ d);
+                    var dd=(region.y + region.y);
+                    console.log(pos.x);
+                    console.log(pos.y +">="+ region.y +"&&"+ pos.y +"<"+ dd);
+                        if (
+                            (pos.x >= 32&& pos.x <=290)&&(pos.y >= 248&& pos.y <= 348)
+                            ) {
+                    console.log("posAbs");
+                    console.log(posAbs);
+                    me.show(posAbs);                          // show tool-tip at this pos
+
+                               }
+                               else setDivPos(posAbs);                     // otherwise, update position
+                             }
+
+                           // get mouse position relative to canvas
+                           function getPos(e) {
+                           var r = canvas.getBoundingClientRect();
+                           return {x: e.clientX - r.left, y: e.clientY - r.top}
+                           }
+
+                           // update and adjust div position if needed (anchor to a different corner etc.)
+                           function setDivPos(pos) {
+                           if (visible){
+                           if (pos.x < 0) pos.x = 0;
+                           if (pos.y < 0) pos.y = 0;
+                           // other bound checks here
+                           div.style.left = pos.x + "px";
+                           div.style.top = pos.y + "px";
+                           }
+                           }
+
+                           // we need to use shared event handlers:
+                           // canvas.addEventListener("mousemove", hide);
+                           canvas.addEventListener("click", check);
+
+                           }
+
+                  }
+                  if ((lft == "32.25px") && (top == "405.075px")) {
+                  //  console.log("Invoice Due Date");
+                    document.getElementById("email_bt").value = textItem.str;
+
+                  }
+                  if ((lft >= "32.25px" && lft<="33.25px") && (top >= "306.525px" && top <= "372.225px" )) {
+                  //  console.log("Invoice Due Date");
+                  //  document.getElementById("address_bt").value = textItem.str;
+                    $('#address_bt').val($('#address_bt').val() + textItem.str);
+
+
+                  }
+
+                  if(textItem.str=="Notes")
+                  {
+
+                      notes_vl=item.style.left;
+                      notes_vtr=item.style.top;
+                      notes_vt=notes_vt + notes_vtr;
+
+                      notes_vl1=(parseInt(notes_vl.replace(/px/,""))+50)+"px"
+                      notes_vt1=(parseInt(notes_vt.replace(/px/,"")))+"px"
+
+
+                  }
+
+
+
+
+if(notes_vt!="")
+{
+
+                  if((top>=notes_vt))
+                  {
+
+                                      console.log(textItem.str);
+
+                                            var table = document.getElementById("notes_tb");
+                                              var row = table.insertRow(1);
+                                              var cell1 = row.insertCell(0);
+                                              var cell2 = row.insertCell(1);
+                                              var s =textItem.str;
+                                              var ss = s.split(":");
+                                        for (var i in ss) {
+                                          //  alert(ss[0]);
+                                          if(ss[1]!=undefined)
+                                          {
+                                            cell1.innerHTML = ss[0];
+                                             cell2.innerHTML = ss[1];
+                                           }
+                                        }
+
+
+                                          }
+
+
+}
+
+
+if(textItem.str=="Product")
+{
+
+    item_vl=item.style.left;
+    item_vtr=item.style.top;
+    item_vt=item_vt + item_vtr;
+
+    item_vl1=(parseInt(item_vl.replace(/px/,""))+50)+"px"
+    item_vt1=(parseInt(item_vt.replace(/px/,"")))+"px"
+
+}
+
+if(textItem.str=="Subtotal:")
+{
+
+    sitem_vl=item.style.left;
+    sitem_vtr=item.style.top;
+    sitem_vt=sitem_vt + sitem_vtr;
+
+    sitem_vl1=(parseInt(sitem_vl.replace(/px/,""))+50)+"px"
+    sitem_vt1=(parseInt(sitem_vt.replace(/px/,"")))+"px"
+
+
+}
+
+
+if(item_vt!="")
+{
+// alert(item_vt);
+// alert(notes_vt);
+                //  if((top>=item_vt && top<=notes_vt ))
+                if(item_vt>sitem_vt)
+                  {
+                    // alert(item_vt);
+                    // alert(notes_vt);
+
+                                    // alert(textItem.str);
+if(textItem.str!="Product"&&textItem.str!="Quantity"&&textItem.str!="Price"&&textItem.str!="Amount")
+{
+
+
+                                            var table = document.getElementById("item_tb");
+                                              var row = table.insertRow(-1);
+                                              var cell1 = row.insertCell(0);
+                                              var cell2 = row.insertCell(1);
+                                                var cell3 = row.insertCell(2);
+                                                var cell4 = row.insertCell(3);
+                                        if(lft == "32.25px")
+                                        {
+                                          //alert($("#item_tb").find("tr").length);
+                                          p = $("#item_tb").find("tr").length;
+                                            //  alert(p);
+                                            cell1.innerHTML =textItem.str;
+                                        }
+
+                                        if(lft != "32.25px")
+                                        {
+                                        if(isNaN(textItem.str)){
+
+
+                                          }
+                                          else {
+                                            {
+                                            //  alert(p);
+                                          //  alert("document.getElementById().rows["+p+"].cells");
+                                              var x = document.getElementById("item_tb").rows[p-1].cells;
+                                                 x[1].innerHTML =textItem.str;
+                                              // alert($("#item_tb").find("tr").length);
+                                              //  cell2.innerHTML =textItem.str;
+                                            }
+                                          }
+                                          }
+                                            if((lft >= "607.829px")&&(lft <= "767.829px"))
+                                        {
+                                          var pos = textItem.str.indexOf('.00');
+
+                                          if(pos!==-1)
+                                          {
+                                            var x = document.getElementById("item_tb").rows[p-1].cells;
+                                               x[2].innerHTML =textItem.str;
+                                            //cell3.innerHTML =textItem.str;
+
+                                          }
+                                        }
+                                        if((lft >= "812.19px")&&(lft <= "855.19px"))
+                                        {
+                                          var pos = textItem.str.indexOf('.00');
+
+                                          if(pos!==-1)
+                                          {
+                                            var x = document.getElementById("item_tb").rows[p-1].cells;
+                                               x[3].innerHTML =textItem.str;
+                                          //  cell4.innerHTML =textItem.str;
+                                          }
+                                        }
+}
+
+                                          }
+
+
+}
+
+
+
+
+                  if ((lft == "32.25px") && (top == "1032.98px")) {
+                  //  console.log("Invoice Due Date");
+                    document.getElementById("gst_nt").value = textItem.str;
+
+                  }
+                  if ((lft == "32.25px") && (top == "1052.41px")) {
+                  //  console.log("Invoice Due Date");
+                    document.getElementById("sac_nt").value = textItem.str;
+
+                  }
+                  if ((lft == "32.25px") && (top == "1071.83px")) {
+                  //  console.log("Invoice Due Date");
+                    document.getElementById("gst_no_nt").value = textItem.str;
+
+                  }
+
+
+
+
+                  fruits.push(item.textContent);
+
+                  item.style.fontFamily = style.fontFamily;
+                  item.style.fontSize = fontSize + 'px';
+                  item.style.transform = 'scaleX(' + tx[0] + ')';
+                  item.style.left = tx[4] + 'px';
+                  item.style.top = tx[5] + 'px';
+
+
+
+
+
+
+                  pageContainer.appendChild(item);
+                    console.log(lft);
+                      console.log(top);
+                  console.log("fdfdf");
+                  console.log(textItem.str);
+                  console.log(item.style.left);
+                  console.log(item.style.left = tx[4] + 'px');
+                  console.log(item.style.top = tx[5] + 'px');
+                });
+
+
+              });
+
+
+
+
+
+
+
+
+            });
+          }, function(reason) {
+
+            console.error(reason);
+          });
+
+        };
+
+        reader.readAsBinaryString(file);
+      }
+
+
+    };
+
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      document.getElementById('filePicker').addEventListener('change', handleFileSelect, false);
+    } else {
+      alert('The File APIs are not fully supported in this browser.');
+    }
+  </script>
+
+  </body>
+</html>

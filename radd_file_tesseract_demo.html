@@ -1,0 +1,371 @@
+<html>
+
+ <div class="container">
+
+<div class="row">
+
+  <div class="col-sm-4">
+
+   <form class="form-horizontal" >
+
+     <div class="form-group">
+       <label class="control-label col-sm-6" for="email">Invoice Number</label>
+       <div class="col-sm-6">
+         <input type="text" id="invoicenumber" placeholder="Invoice Name">
+       </div>
+     </div>
+     <div class="form-group">
+       <label class="control-label col-sm-6" for="pwd">Invoice Date:</label>
+       <div class="col-sm-6">
+         <input type="text" id="invoicedate" placeholder="Invoice Date">
+       </div>
+     </div>
+     <div class="form-group">
+       <label class="control-label col-sm-6" for="email">Pan No:</label>
+       <div class="col-sm-6">
+         <input type="text" id="po_no" placeholder="Pan No">
+       </div>
+     </div>
+     <div class="form-group">
+       <label class="control-label col-sm-6" for="pwd">Place of Supply</label>
+       <div class="col-sm-6">
+         <input type="text" id="p_s" placeholder="Place of Supply">
+       </div>
+     </div>     <div class="form-group">
+            <label class="control-label col-sm-6" for="email">GSTIN NO:</label>
+            <div class="col-sm-6">
+              <input type="text" id="gstin_no" placeholder="GSTIN NO">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-6" for="email">Choose a file:</label>
+
+            <div class="col-sm-offset-6 col-sm-6">
+
+
+              <input type="file" id="pdf">
+              <input type="hidden" id="newinnovoicename" value="" placeholder="Innovoice Name">
+
+            </div>
+            </div>
+
+        </form>
+     </div>
+       <div class="col-sm-8">
+           <canvas id="the-canvas"></canvas>
+
+       </div>
+     </div>
+
+
+
+
+
+
+
+
+
+          </div>
+          </html>
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+           <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+          <script src='https://cdn.rawgit.com/naptha/tesseract.js/1.0.10/dist/tesseract.js'></script>
+          <script>
+          function drawTextBG(ctx, txt, font, x, y) {
+
+              ctx.save();
+              ctx.font = font;
+              ctx.textBaseline = 'top';
+              ctx.fillStyle = '#f50';
+
+              var width =133;
+              console.log(width);
+              ctx.fillRect(x, y, width, parseInt(font, 10));
+
+              ctx.fillStyle = '#000';
+              ctx.fillText(txt, x, y);
+
+              ctx.restore();
+          }
+
+
+
+
+          function progressUpdate(packet){
+                  var log = document.getElementById('log');
+          console.log("test");
+          console.log(packet);
+                  if(log.firstChild && log.firstChild.status === packet.status){
+                          if('progress' in packet){
+                                  var progress = log.firstChild.querySelector('progress')
+                                  progress.value = packet.progress
+                          }
+                  }else{
+                          var line = document.createElement('div');
+                          line.status = packet.status;
+                          var status = document.createElement('div')
+                                         status.className = 'status'
+                                         status.appendChild(document.createTextNode(packet.status))
+                                         line.appendChild(status)
+
+                                         if('progress' in packet){
+                                                 var progress = document.createElement('progress')
+                                                 progress.value = packet.progress
+                                                 progress.max = 1
+                                                 line.appendChild(progress)
+                                         }
+
+
+                                         if(packet.status == 'done'){
+                                                 var pre = document.createElement('pre')
+                                                 pre.appendChild(document.createTextNode(packet.data.text))
+                                                 console.log(packet.data.text);
+                                                 line.innerHTML = ''
+                                                 line.appendChild(pre)
+
+                         console.log("test");
+                         console.log(packet.data.words);
+
+                         var data1=packet.data.words;
+                         var i =0;
+                         var total = data1.length;
+                         var ids = [];
+                         var bl={x0: 73, y0: 73, x1: 111, y1: 73, has_baseline: true}
+                         console.log(data1[ 7].text);
+                         console.log("testw");
+                         // document.getElementById("invoicenumber").value ='';
+                         //document.getElementById("invoicedate").value =data1[12].text;
+                         for(; i < total; i++) {
+
+                            ids.push( data1[ i ].baseline);
+                         var blo=data1[ i ].baseline;
+                         //console.log(bl);
+                         //console.log(blo);
+                         //console.log(data1[i].baseline.x0);
+                         //if((data1[i].baseline.x0>='642' && data1[i].baseline.x0<='698')&&(data1[i].baseline.y0=='231')&&(data1[i].baseline.x1=='747')&&(data1[i].baseline.y1=='233'))
+                         //  var canvas = document.getElementById('the-canvas');
+                           //            var ctx = canvas.getContext('2d');
+
+                         //drawTextBG(ctx, '32px arial', 0, 10);
+                         var ctx = document.getElementById('the-canvas').getContext('2d');
+                           ctx.font = '48px serif';
+                           ctx.strokeText('Delhl', 10, 50);
+
+                         if((data1[i].baseline.x0>='642' && data1[i].baseline.x0<='698')&&(data1[i].baseline.y0>='211'&& data1[i].baseline.y0<='232'))
+                         {
+                                             document.getElementById("invoicenumber").value = data1[i].text;
+                         alert(data1[i].text);
+                         console.log(data1[i].text);
+
+                         }
+                         if((data1[i].baseline.x0>='642' && data1[i].baseline.x0<='698')&&(data1[i].baseline.y0>='233'&& data1[i].baseline.y0<='251'))
+                         {
+                                             document.getElementById("invoicedate").value = data1[i].text;
+                         alert(data1[i].text);
+                         console.log(data1[i].text);
+
+                         }
+                         if((data1[i].baseline.x0>='640' && data1[i].baseline.x0<='698')&&(data1[i].baseline.y0>='255'&& data1[i].baseline.y0<='271'))
+                         {
+                                             document.getElementById("po_no").value = data1[i].text;
+                                             alert(data1[i].text);
+console.log(data1[i].text);
+}
+if((data1[i].baseline.x0>='670' && data1[i].baseline.x0<='732')&&(data1[i].baseline.y0>='275'&& data1[i].baseline.y0<='290'))
+{
+       document.getElementById("p_s").value = data1[i].text;
+alert(data1[i].text);
+console.log(data1[i].text);
+
+}
+if((data1[i].baseline.x0>='640' && data1[i].baseline.x0<='697')&&(data1[i].baseline.y0>='298'&& data1[i].baseline.y0<='310'))
+{
+       document.getElementById("gstin_no").value = data1[i].text;
+alert(data1[i].text);
+console.log(data1[i].text);
+
+}
+
+}
+console.log(ids);
+/*
+console.log(ids);
+
+var i1 =0;
+var total1 = ids.length;
+console.log(total1);
+for(; i1 < total1; i1++) {
+//console.log("ids[ i ].xo");
+//console.log(ids[ i1 ].x0);
+//x0: 642, y0: 231, x1: 747, y1: 233
+if((ids[ i1 ].x0=='642')&&(ids[ i1 ].y0=='231')&&(ids[ i1 ].x1=='747')&&(ids[ i1 ].y1=='233'))
+{
+console.log("tewst");
+
+}
+
+}
+*/
+//              line.innerHTML = ''
+//              line.appendChild(pre)
+
+}
+
+    log.insertBefore(line, log.firstChild)
+}
+}
+
+function recognizeFile(file){
+document.querySelector("#log").innerHTML = ''
+
+
+
+Tesseract.recognize(file, {
+    lang: document.querySelector('#langsel').value
+})
+    .progress(function(packet){
+            console.info(packet)
+            progressUpdate(packet)
+
+    })
+    .then(function(data){
+            console.log(data)
+            progressUpdate({ status: 'done', data: data })
+    })
+}
+</script>
+<script type="text/javascript" src="https://rawgithub.com/mozilla/pdf.js/gh-pages/build/pdf.js"></script>
+
+<script type="text/javascript">
+PDFJS.disableWorker = true;
+
+    //
+    // Asynchronous download PDF as an ArrayBuffer
+    //
+    var pdf = document.getElementById('pdf');
+    pdf.onchange = function(ev) {
+      if (file = document.getElementById('pdf').files[0]) {
+        fileReader = new FileReader();
+        fileReader.onload = function(ev) {
+          console.log(ev);
+          PDFJS.getDocument(fileReader.result).then(function getPdfHelloWorld(pdf) {
+            //
+            // Fetch the first page
+            //
+            console.log(pdf)
+            pdf.getPage(1).then(function getPageHelloWorld(page) {
+              var scale = 1.5;
+              var viewport = page.getViewport(scale);
+
+              //
+              // Prepare canvas using PDF page dimensions
+              //
+              var canvas = document.getElementById('the-canvas');
+              var context = canvas.getContext('2d');
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+
+              //
+              // Render PDF page into canvas context
+              //
+              var task = page.render({canvasContext: context, viewport: viewport})
+              task.promise.then(function(){
+            //    console.log(canvas.toDataURL('image/jpeg'));
+      var _testImage =canvas.toDataURL('image/jpeg');
+  Tesseract.recognize(_testImage, {
+    lang: document.querySelector('#langsel').value
+})
+.progress(function(packet){
+console.info(packet)
+progressUpdate(packet)
+
+})
+.then(function(data){
+console.log(data)
+
+/*
+if(data.words)
+{
+var arr = data.words;
+//console.log(data.words);
+for (var i = 0; i < arr.length; i++) {
+var baseline = arr[i].baseline;
+for (var img in baseline) {
+var i =0;
+var d=baseline[img];
+var total = d.length;
+var ids = [];
+}
+}
+}*/
+
+progressUpdate({ status: 'done', data: data })
+
+})
+
+});
+});
+}, function(error){
+console.log(error);
+});
+};
+fileReader.readAsArrayBuffer(file);
+}
+}
+ </script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/processing.js/1.4.1/processing-api.min.js"></script>
+
+<select id="langsel"style="display:none;" onchange="window.lastFile && recognizeFile(window.lastFile)">
+<option value='afr'     > Afrikaans             </option>
+
+<option value='eng'     selected> English                </option>
+<option value='enm'     > English (Old)         </option>
+<option value='hin'     > Hindi                 </option>
+</select>
+
+<button style="display:none;" onclick="recognizeFile('../node/cosmic.png')">Sample Image</button>
+<input style="display:none;" type="file" onchange="recognizeFile(window.lastFile=this.files[0])">
+
+<div id="log" style="display:none;"></div>
+
+
+<style>
+#log > div {
+   color: #313131;
+   border-top: 1px solid #dadada;
+   padding: 9px;
+   display: flex;
+}
+#log > div:first-child {
+   border: 0;
+}
+
+
+.status {
+       min-width: 250px;
+}
+#log {
+   border: 1px solid #dadada;
+   padding: 10px;
+   margin-top: 20px;
+   min-height: 100px;
+ }
+ body {
+     font-family: sans-serif;
+     margin: 30px;
+ }
+
+ progress {
+     display: block;
+     width: 100%;
+     transition: opacity 0.5s linear;
+ }
+ progress[value="1"] {
+     opacity: 0.5;
+ }
+ </style>
+
+ <style id="jsbin-css">
+
+ </style>

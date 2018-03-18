@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <!-- <input type="text" id="innovoicename" placeholder="Innovoice Name"> -->
+  <input type="hidden" id="ordernumber" placeholder="Order Number">
+  <input type="hidden" id="innovicenumber" placeholder="Innovice Number">
+  <input type="hidden" id="innovicestartdate" placeholder="Innovice StartDate">
+  <input type="hidden" id="innoviceduedate" placeholder="Innovice DueDate">
+  <input type="hidden" id="innvoiceamount" placeholder="Innvoice Amount">
+  <input type="hidden" id="invoiceleft" placeholder="Left">
+  <input type="hidden" id="invoicetop" placeholder="Top">
+  <!-- <input type="text" id="innovoicename" placeholder="innovoicename">
+
+  <input type="text" id="invoice_date" placeholder="invoice_date">
+
+  <input type="text" id="po_no" placeholder="po_no">
+
+  <input type="text" id="currency" placeholder="currency">
+  <input type="text" id="payment_terms" placeholder="payment_terms"> -->
+  <!-- <canvas id="the-canvas"></canvas> -->
+
+    <div>
+
+    <br>
+    <div>
+      <textarea style="display:none;" id="base64textarea" placeholder="Base64 will appear here" cols="50" rows="15"></textarea>
+    </div>
+  </div>
+
+
+  <div id="text-overlay" style="display:none;"></div>
+  <!-- <canvas id="the-canvas" style="display:none;"></canvas> -->
+
+  <div class="container">
+  <!-- <canvas id="the-canvas"></canvas> -->
+</div>
+ <div class="container">
+
+<div class="row">
+
+  <div class="col-sm-4">
+
+   <form class="form-horizontal" >
+
+     <div class="form-group">
+       <label class="control-label col-sm-6" for="email">Invoice Number</label>
+       <div class="col-sm-6">
+         <input type="text" id="innovoicename" placeholder="Invoice Name">
+       </div>
+     </div>
+     <div class="form-group">
+       <label class="control-label col-sm-6" for="pwd">Invoice Date:</label>
+       <div class="col-sm-6">
+         <input type="text" id="invoice_date" placeholder="Invoice Date">
+       </div>
+     </div>
+     <div class="form-group">
+       <label class="control-label col-sm-6" for="email">Payment Due:</label>
+       <div class="col-sm-6">
+         <input type="text" id="po_no" placeholder="Payment Due">
+       </div>
+     </div>
+     <div class="form-group">
+       <label class="control-label col-sm-6" for="pwd">Currency</label>
+       <div class="col-sm-6">
+         <input type="text" id="currency" placeholder="Currency">
+       </div>
+     </div>     <div class="form-group">
+            <label class="control-label col-sm-6" for="email">Payment Terms:</label>
+            <div class="col-sm-6">
+              <input type="text" id="payment_terms" placeholder="Payment Terms">
+            </div>
+          </div>
+
+
+     <div class="form-group">
+       <label class="control-label col-sm-6" for="email">Choose a file:</label>
+
+       <div class="col-sm-offset-6 col-sm-6">
+
+
+         <input type="file" id="filePicker">
+         <input type="hidden" id="newinnovoicename" value="" placeholder="Innovoice Name">
+
+       </div>
+       </div>
+
+   </form>
+</div>
+  <div class="col-sm-8">
+      <canvas id="the-canvas"></canvas>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+     </div>
+
+  <style>
+    #the-canvas {
+      border: 1px solid black;
+    }
+  </style>
+
+
+
+  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+  <script>
+  var invoiceleft='';
+  var invoicetop='';
+    var handleFileSelect = function(evt) {
+
+      document.getElementById("innovoicename").value='';
+        document.getElementById("invoice_date").value='';
+          document.getElementById("po_no").value='';
+            document.getElementById("currency").value='';
+              document.getElementById("payment_terms").value='';
+                // document.getElementById("innvoiceamount").value='';
+
+      //alert(document.getElementById("invoiceleft").value);
+      var files = evt.target.files;
+      var file = files[0];
+
+      if (files && file) {
+        var reader = new FileReader();
+
+        reader.onload = function(readerEvt) {
+          var binaryString = readerEvt.target.result;
+          document.getElementById("base64textarea").value = btoa(binaryString);
+          //console.log(btoa(binaryString));
+
+          //////////////////////
+
+
+          //console.log(document.getElementById("base64textarea").value);
+          ////////////////////////
+
+
+
+          var pdfData = atob(btoa(binaryString));
+
+          // Disable workers to avoid yet another cross-origin issue (workers need
+          // the URL of the script to be loaded, and dynamically loading a cross-origin
+          // script does not work).
+          // PDFJS.disableWorker = true;
+
+          // The workerSrc property shall be specified.
+          PDFJS.workerSrc = 'http:////mozilla.github.io/pdf.js/build/pdf.worker.js';
+
+          // Using DocumentInitParameters object to load binary data.
+          var loadingTask = PDFJS.getDocument({
+            data: pdfData
+          });
+          loadingTask.promise.then(function(pdf) {
+            console.log('PDF loaded');
+
+            // Fetch the first page
+            var pageNumber = 1;
+            pdf.getPage(pageNumber).then(function(page) {
+              console.log('Page loaded');
+
+              var scale = 1.5;
+              var viewport = page.getViewport(scale);
+
+              // Prepare canvas using PDF page dimensions
+              var canvas = document.getElementById('the-canvas');
+              var context = canvas.getContext('2d');
+              console.log("context");
+              console.log(context);
+              canvas.height="100px";
+
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+              canvas.height="700";
+              canvas.width="825";
+// alert(canvas.height);
+// alert(canvas.width);
+              // Render PDF page into canvas context
+              var renderContext = {
+                canvasContext: context,
+                viewport: viewport
+              };
+              var renderTask = page.render(renderContext);
+              renderTask.then(function() {
+                //console.log('Page rendered');
+              });
+
+
+              var ctx = document.createElement('canvas').getContext('2d', {
+                alpha: false
+              });
+
+
+              var pageContainer = document.getElementById('text-overlay');
+              pageContainer.classList.add('page-container');
+              pageContainer.style.width = viewport.width + 'px';
+              pageContainer.style.height = viewport.height + 'px';
+
+              page.getTextContent({
+                normalizeWhitespace: true
+              }).then(function(textContent) {
+
+                textContent.items.forEach(function(textItem) {
+                  var tx = PDFJS.Util.transform(
+                    PDFJS.Util.transform(viewport.transform, textItem.transform), [1, 0, 0, -1, 0, 0]
+                  );
+
+                  var style = textContent.styles[textItem.fontName];
+
+                  var fontSize = Math.sqrt((tx[2] * tx[2]) + (tx[3] * tx[3]));
+
+                  if (style.ascent) {
+                    tx[5] -= fontSize * style.ascent;
+                  } else if (style.descent) {
+                    tx[5] -= fontSize * (1 + style.descent);
+                  } else {
+                    tx[5] -= fontSize / 2;
+                  }
+
+                  if (textItem.width > 0) {
+                    ctx.font = tx[0] + 'px ' + style.fontFamily;
+
+                    var width = ctx.measureText(textItem.str).width;
+
+                    if (width > 0) {
+                      tx[0] = (textItem.width * viewport.scale) / width;
+                    }
+                  }
+
+                  var item = document.createElement('span');
+                  item.textContent = textItem.str === 'Adobe Acrobat PDF Files' ? 'Burp!' : textItem.str;
+                  item.style.fontFamily = style.fontFamily;
+                  item.style.fontSize = fontSize + 'px';
+                  item.style.transform = 'scaleX(' + tx[0] + ')';
+                  item.style.left = tx[4] + 'px';
+                  item.style.top = tx[5] + 'px';
+
+                  pageContainer.appendChild(item);
+                });
+              });
+              var pageContainer = document.getElementById('text-overlay');
+              pageContainer.classList.add('page-container');
+            pageContainer.style.width = viewport.width + 'px';
+            //   pageContainer.style.width = '100px';
+           pageContainer.style.height = viewport.height + 'px';
+              //   pageContainer.style.height="100px";
+  //  alert(  pageContainer.style.width);
+  //  alert(  pageContainer.style.height);
+              page.getTextContent({
+                normalizeWhitespace: true
+              }).then(function(textContent) {
+                var fruits = [];
+
+                textContent.items.forEach(function(textItem) {
+
+                  var tx = PDFJS.Util.transform(
+                    PDFJS.Util.transform(viewport.transform, textItem.transform), [1, 0, 0, -1, 0, 0]
+                  );
+
+                  var style = textContent.styles[textItem.fontName];
+
+                  var fontSize = Math.sqrt((tx[2] * tx[2]) + (tx[3] * tx[3]));
+
+                  if (style.ascent) {
+                    tx[5] -= fontSize * style.ascent;
+                  } else if (style.descent) {
+                    tx[5] -= fontSize * (1 + style.descent);
+                  } else {
+                    tx[5] -= fontSize / 2;
+                  }
+
+                  if (textItem.width > 0) {
+                    ctx.font = tx[0] + 'px ' + style.fontFamily;
+
+                    var width = ctx.measureText(textItem.str).width;
+
+                    if (width > 0) {
+                      tx[0] = (textItem.width * viewport.scale) / width;
+                    }
+                  }
+
+                  var item = document.createElement('span');
+                  item.textContent = textItem.str === 'Hello, world!' ? 'Burp!' : textItem.str;
+
+                  item.style.left = tx[4] + 'px';
+                  item.style.top = tx[5] + 'px';
+                  //  Getting values from pdf and appending into text box
+
+                  var lft = item.style.left;
+                  var top = item.style.top;
+                  // alert(lft);
+                  // alert(top);
+                  // document.getElementById("invoiceleft").value
+                  //   document.getElementById("invoicetop").value
+                  if(invoiceleft==''){
+
+console.log(document.getElementById("newinnovoicename"));
+                  if (textItem.str == document.getElementById("newinnovoicename").value) {
+                      invoiceleft=item.style.left;
+                       invoicetop=item.style.top;
+                      //  alert(invoiceleft);
+                      //  alert(invoicetop);
+                         document.getElementById("invoiceleft").value=invoiceleft;
+                         document.getElementById("invoicetop").value=invoicetop;
+                    // alert("Your invoice number top and left pxs are:" + item.style.left + "," +
+                    //   item.style.top);
+
+                  }
+                    }
+
+  // if(invoiceleft!=''){
+  //                   invoiceleft=document.getElementById("invoiceleft").value;
+  //                   invoicetop=document.getElementById("invoicetop").value;
+  //                     alert("invoiceleft");
+  //                     alert("Your invoice number top and left pxs are:" + item.style.left + "," +
+  //                       item.style.top);
+  //                 }
+                  // if ((lft == document.getElementById("invoiceleft").value) && (top == document.getElementById("invoicetop").value)) {
+                  //        alert("invoiceleft");
+                  //        alert(invoiceleft);
+                  //        alert(invoicetop);
+                  //        alert(textItem.str);
+                  //   document.getElementById("innovoicename").value = textItem.str;
+                  // }
+                  if ((lft == "735.868px") && (top == "275.783px")) {
+                    console.log("Invoice number");
+                    document.getElementById("innovoicename").value = textItem.str;
+
+                  }
+                  if ((lft == "735.868px") && (top == "305.708px")) {
+                    console.log("Invoice number");
+                    document.getElementById("invoice_date").value = textItem.str;
+
+                  }
+
+                  if ((lft == "735.868px") && (top == "335.632px")) {
+                    console.log("Order number");
+                    document.getElementById("po_no").value = textItem.str;
+
+                  }
+
+                  if ((lft == "735.868px") && (top == "361.717px")) {
+                    console.log("Invoice Dtae");
+                    document.getElementById("currency").value = textItem.str;
+
+                  }
+
+                  if ((lft == "744.388px") && (top == "364.988px")) {
+                    console.log("Invoice Due Date");
+                    document.getElementById("payment_terms").value = textItem.str;
+
+                  }
+
+
+                  fruits.push(item.textContent);
+
+                  item.style.fontFamily = style.fontFamily;
+                  item.style.fontSize = fontSize + 'px';
+                  item.style.transform = 'scaleX(' + tx[0] + ')';
+                  item.style.left = tx[4] + 'px';
+                  item.style.top = tx[5] + 'px';
+
+
+
+
+
+
+                  pageContainer.appendChild(item);
+                    console.log(lft);
+                      console.log(top);
+                  console.log("fdfdf");
+                  console.log(textItem.str);
+                  console.log(item.style.left = tx[4] + 'px');
+                  console.log(item.style.top = tx[5] + 'px');
+                });
+
+
+              });
+
+
+
+
+
+
+
+
+            });
+          }, function(reason) {
+
+            console.error(reason);
+          });
+
+        };
+
+        reader.readAsBinaryString(file);
+      }
+
+
+
+
+    };
+
+
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      document.getElementById('filePicker').addEventListener('change', handleFileSelect, false);
+    } else {
+      alert('The File APIs are not fully supported in this browser.');
+    }
+  </script>
+</body>
+
+</html>
